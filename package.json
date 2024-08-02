@@ -10,7 +10,9 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --clear --transpile-only --ignore-watch node_modules ./src/app.ts",
     "build": "rimraf ./dist && tsc",
-    "start": "node dist/app.js"
+    "start": "node dist/app.js",
+    "generate": "npx prisma generate",
+    "push": "npx prisma db push"
   },
   "keywords": [],
   "author": "",
@@ -34,13 +36,18 @@
     "typescript-eslint": "^7.13.1"
   },
   "dependencies": {
+    "@prisma/client": "^5.17.0",
     "@types/morgan": "^1.9.9",
+    "@types/nodemailer": "^6.4.15",
     "compression": "^1.7.4",
     "dotenv": "^16.4.5",
     "env-var": "^7.5.0",
     "express": "^4.19.2",
     "express-rate-limit": "^7.3.1",
+    "i": "^0.3.7",
     "morgan": "^1.10.0",
+    "nodemailer": "^6.9.14",
+    "prisma": "^5.17.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   }

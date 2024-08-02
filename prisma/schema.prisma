@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model utilisateurs {
+  userID   String @id @default(auto()) @map("_id") @db.ObjectId
+  nom      String
+  email    String @unique
+  password String
+  empruntIDs String []@db.ObjectId
+  emprunt emprunt[]@relation(fields: [empruntIDs],references: [empruntID])
+  notificationIDs String []@db.ObjectId
+  notification notification[]@relation(fields: [notificationIDs],references: [notificationID])
+}
+
+model emprunt {
+  empruntID   String   @id @default(auto()) @map("_id") @db.ObjectId
+  dateEmprunt DateTime
+  dateRetour  DateTime?
+  userIDs String []@db.ObjectId
+  users utilisateurs []@relation(fields: [userIDs], references: [userID])
+  livreIDs String []@db.ObjectId
+  livre livres []@relation(fields: [livreIDs], references: [livreID])
+
+}
+
+model livres {
+  livreID     String @id @default(auto()) @map("_id") @db.ObjectId
+  titre       String
+  auteur      String
+  description String
+  anneePubli  Int
+  ISBN        String
+  etat        Etat @default(DISPONIBLE)
+  empruntIDs String []@db.ObjectId
+  emprunt emprunt[]@relation(fields: [empruntIDs],references: [empruntID])
+  notificationIDs String []@db.ObjectId
+  notification notification[]@relation(fields: [notificationIDs],references: [notificationID])
+}
+
+model notification {
+  notificationID String   @id @default(auto()) @map("_id") @db.ObjectId
+  utilisateurID  String
+  livreID        String
+  message        String
+  date           DateTime
+  userIDs String []@db.ObjectId
+  users utilisateurs []@relation(fields: [userIDs], references: [userID])
+  livreIDs String []@db.ObjectId
+  livre livres []@relation(fields: [livreIDs], references: [livreID])
+}
+enum Etat {
+  DISPONIBLE
+  EMPRUNTE
+  RETOUR
+}
