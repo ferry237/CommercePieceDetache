@@ -1,5 +1,7 @@
 import nodemailer from 'nodemailer';
+
 import { envs } from './env';
+
 async function sendmail(userEmail:string, text:string, sujet:string) {
     const transporter = nodemailer.createTransport({
       service: "Gmail",
@@ -16,7 +18,7 @@ async function sendmail(userEmail:string, text:string, sujet:string) {
       from: '"ferry👻"<youbiferry@gmail.com>',
       to: userEmail,
       subject: sujet,
-      html: text
+      html: `<b style="font-size: 32px; color: green;">Bonjour ${text},</b>`
     });
   }
 

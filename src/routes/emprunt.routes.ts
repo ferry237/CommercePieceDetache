@@ -6,7 +6,7 @@ const routeEmprunt = Router()
 
 routeEmprunt.post('/',emprunController.emprunLivre)
 routeEmprunt.put('/:id/return',emprunController.retourBook)
-routeEmprunt.post('/user/:userID', emprunController.historiqueBook)
+routeEmprunt.get('/user/:userID', emprunController.historiqueBook)
 
 
 export default routeEmprunt

@@ -5,8 +5,8 @@ import {
 
 import { PrismaClient } from '@prisma/client';
 
-import { HttpCode } from '../core/constants';
 import sendmail from '../core/config/sendmail';
+import { HttpCode } from '../core/constants';
 
 const prisma = new PrismaClient();
 
@@ -101,10 +101,24 @@ const emprunController = {
                 });
                 res.status(HttpCode.OK).json(updatedLoan);
                 //envoie du mail
+                const Users = loan.users
+                const book =loan.livre
+                const bookTitles = book.map((b) => b.titre);
+                const userEmail = Users[0].email;
+                const userid:string=Users[0].userID;
+                const bookid:string=book[0].livreID
+                const msg=`les livres que vous avez empruntés ont bien été reçu il sagit des livres suivant: ${bookTitles},`
+                const subject:string=`confirmation de reception des livres remis`
+                sendmail(userEmail,msg,subject);
 
-                const mail = loan.users
-                console.log(mail)
-            
+                await prisma.notification.create({
+                    data: {
+                       utilisateurID:userid,
+                       livreID:bookid,
+                        message: msg,
+                        date: new Date()
+                      },
+                })
             } 
             catch (error) {
                 console.error(error);
