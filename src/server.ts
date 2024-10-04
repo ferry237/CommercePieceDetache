@@ -10,9 +10,8 @@ import {
   ONE_HUNDRED,
   SIXTY,
 } from './core/constants';
-import bookroute from './routes/book.routes';
-import routeEmprunt from './routes/emprunt.routes';
-import useroute from './routes/user.routes';
+import pieceRoute from './routes/Pieces.Routes';
+import RouteUser from './routes/User.Routes';
 import { setupSwagger } from './swagger';
 
 const app = express();
@@ -27,9 +26,8 @@ app.use(
 	})
 );
 app.use(cookieParser());
-app.use("/users", useroute);
-app.use("/books", bookroute);
-app.use("/loans", routeEmprunt);
+app.use(RouteUser),
+app.use(pieceRoute),
 app.use(morgan('combined'));
 
 setupSwagger(app);

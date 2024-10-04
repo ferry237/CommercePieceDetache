@@ -12,56 +12,27 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
-
-model utilisateurs {
-  userID   String @id @default(auto()) @map("_id") @db.ObjectId
-  nom      String
-  email    String @unique
-  password String
-  empruntIDs String []@db.ObjectId
-  emprunt emprunt[]@relation(fields: [empruntIDs],references: [empruntID])
-  notificationIDs String []@db.ObjectId
-  notification notification[]@relation(fields: [notificationIDs],references: [notificationID])
+model utilisateur {
+  idUser       String @id @default(auto()) @map("_id") @db.ObjectId
+  nomUser      String
+  prenomUser   String
+  emailUser    String @unique
+  passwordUser String
+  statusUser   Role
+  telephone    String @unique
 }
 
-model emprunt {
-  empruntID   String   @id @default(auto()) @map("_id") @db.ObjectId
-  dateEmprunt DateTime
-  dateRetour  DateTime?
-  userIDs String []@db.ObjectId
-  users utilisateurs []@relation(fields: [userIDs], references: [userID])
-  livreIDs String []@db.ObjectId
-  livre livres []@relation(fields: [livreIDs], references: [livreID])
-
-}
-
-model livres {
-  livreID     String @id @default(auto()) @map("_id") @db.ObjectId
-  titre       String
-  auteur      String
+model pieces {
+  idPiece     String @id @default(auto()) @map("_id") @db.ObjectId
+  nomPiece    String
+  typePiece   String
   description String
-  anneePubli  Int
-  ISBN        String
-  etat        Etat @default(DISPONIBLE)
-  empruntIDs String []@db.ObjectId
-  emprunt emprunt[]@relation(fields: [empruntIDs],references: [empruntID])
-  notificationIDs String []@db.ObjectId
-  notification notification[]@relation(fields: [notificationIDs],references: [notificationID])
+  prix        Int
+  quantite    Int
 }
 
-model notification {
-  notificationID String   @id @default(auto()) @map("_id") @db.ObjectId
-  utilisateurID  String
-  livreID        String
-  message        String
-  date           DateTime
-  userIDs String []@db.ObjectId
-  users utilisateurs []@relation(fields: [userIDs], references: [userID])
-  livreIDs String []@db.ObjectId
-  livre livres []@relation(fields: [livreIDs], references: [livreID])
-}
-enum Etat {
-  DISPONIBLE
-  EMPRUNTE
-  RETOUR
+enum Role {
+  acheteur
+  administrateur
+  vendeur
 }
