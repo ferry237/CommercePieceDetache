@@ -1,9 +1,4 @@
-# @worketyamo/ts-starter
-
-## Vue d'ensemble
-
-`@worketyamo/ts-starter` est un projet de démarrage TypeScript conçu pour simplifier le développement d'applications Express.js. Ce kit de démarrage inclut les configurations et dépendances essentielles pour vous permettre de démarrer rapidement, tout en appliquant des normes de qualité et de cohérence du code avec ESLint et Prettier.
-
+# @ProjetEcommerce
 ## Fonctionnalités
 
 - TypeScript pour le typage statique et une intelligence de code avancée
